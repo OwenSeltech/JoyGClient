@@ -2,17 +2,9 @@
 using JoyGClient.Entities;
 using JoyGClient.Interfaces;
 using JoyGClient.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using JoyGClient.DTOs;
-using JoyGClient.Interfaces;
-using JoyGClient.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace JoyGClient.Services

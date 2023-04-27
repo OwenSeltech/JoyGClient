@@ -1,5 +1,4 @@
-﻿using JoyGClient.Data.Repositories;
-using JoyGClient.DTOs;
+﻿using JoyGClient.DTOs;
 using JoyGClient.Entities;
 
 namespace JoyGClient.Interfaces

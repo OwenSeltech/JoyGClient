@@ -1,5 +1,4 @@
-﻿using JoyGClient.Entities;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace JoyGClient.Interfaces
 {

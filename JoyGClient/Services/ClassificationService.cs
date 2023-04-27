@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using JoyGClient.Data.Repositories;
 using JoyGClient.DTOs;
 using JoyGClient.Entities;
 using JoyGClient.Interfaces;

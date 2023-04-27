@@ -1,6 +1,5 @@
 ﻿using JoyGClient.Entities;
 using Microsoft.AspNetCore.Identity;
-using System.Data;
 
 namespace JoyGClient.Data
 {
