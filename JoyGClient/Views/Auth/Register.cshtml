@@ -1,0 +1,108 @@
+﻿@model JoyGClient.Models.RegisterModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+</head>
+<body>
+    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
+    <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css'
+          media="screen" />
+
+
+    @using (Html.BeginForm("Register", "Auth", FormMethod.Post))
+    {
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div>
+                <h2 class="form-signin-heading">
+                    Please fill out the registration details
+                </h2>
+                <h3 style="font-weight:bold">Personal Details</h3>
+                <div id="dvMessage" style="display:none" class="alert alert-danger">
+                    <strong>Error!</strong>
+                    <span>@ViewBag.Message</span>
+                </div>
+                @Html.LabelFor(m => m.Surname)
+                @Html.TextBoxFor(m => m.Surname, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "error" })
+                </div>
+                <br>
+                @Html.LabelFor(m => m.IDNumber)
+                @Html.TextBoxFor(m => m.IDNumber, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.IDNumber, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.DateOfBirth)
+                @Html.TextBoxFor(m => m.DateOfBirth,"{0:yyyy-MM-dd}", new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.DateOfBirth, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.PhoneNumber)
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.Address)
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.Address, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.Province)
+                @Html.DropDownListFor(m => m.Province, new SelectList(Enum.GetValues(typeof(Provinces))), "Please select", new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.Province, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.Password)
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "error" })
+                </div>
+                <br />
+                @Html.LabelFor(m => m.ConfirmPassword)
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                <div>
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "error" })
+                </div>
+                <br />
+                <label class="form-check-label" for="myCheckbox">Currently employed</label>
+                @Html.CheckBoxFor(m => m.IsEmployed)
+                <div>
+                    @Html.ValidationMessageFor(m => m.IsEmployed, "", new { @class = "error" })
+                </div>
+                <br />
+                <input type="submit" value="Submit" class="btn btn-primary" />
+                <br />
+                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
+                <br />
+            </div>
+        </div>
+    }
+    @if (@ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+                $("#dvMessage").show();
+            });
+        </script>
+    }
+</body>
+</html>
