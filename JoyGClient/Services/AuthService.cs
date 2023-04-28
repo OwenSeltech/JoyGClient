@@ -40,7 +40,10 @@ namespace JoyGClient.Services
                 return userDto;
             }
 
-           var claims = new List<Claim>
+            var signIn = await _signInManager.PasswordSignInAsync(user.UserName, loginDto.Password, false, lockoutOnFailure: true);
+
+
+            var claims = new List<Claim>
            {
                new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
                new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),

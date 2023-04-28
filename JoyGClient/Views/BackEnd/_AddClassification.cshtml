@@ -1,0 +1,63 @@
+﻿@model JoyGClient.Models.ClassificationModel
+
+<form asp-controller="BackEnd" asp-action="AddClassification" data-ajax="true" data-ajax-method="POST">
+    <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Restaurant Classification</h5>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="row">
+                            <div id="dvMessage" style="display:none" class="alert alert-danger">
+                                <strong>Error!</strong>
+                                <span>@ViewBag.Message</span>
+                            </div>
+                            <br />
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="floating-label" for="Name">Classification Name</label>
+                                    @Html.TextBoxFor(m => m.ClassificationName, new { @class = "form-control" })
+                                    <span class="field-validation-valid" data-valmsg-for="ClassificationName" data-valmsg-replace="true"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@if (@ViewBag.Message != null)
+{
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#showAddModal').click(function () {
+                $.ajax({
+                    url: '/BackEnd/ManageRestaurantClassifications',
+                    type: 'GET',
+                    success: function (result) {
+                        console.log("Success")
+                        $('#modalContainer').html(result);
+                        $('#modalAdd').modal('show');
+                    }
+                });
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $("#dvMessage").show();
+        });
+    </script>
+}

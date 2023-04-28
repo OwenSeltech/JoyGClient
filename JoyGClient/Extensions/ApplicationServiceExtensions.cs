@@ -24,6 +24,11 @@ namespace JoyGClient.Extensions
                     sqlOptions.EnableRetryOnFailure();
 
                 }), ServiceLifetime.Transient);
+            services.AddAuthentication("Identity.Application")
+                                       .AddCookie("Identity.Application", options =>
+                                       {
+                                           // Configure cookie options here
+                                       });
             return services;
         }
 

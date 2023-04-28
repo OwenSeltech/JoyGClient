@@ -23,6 +23,11 @@
                 <h2 class="form-signin-heading">
                     Login
                 </h2>
+                <div id="dvMessage" style="display:none" class="alert alert-danger">
+                    <strong>Error!</strong>
+                    <span>@ViewBag.Message</span>
+                </div>
+                <br/>
                 @Html.LabelFor(m => m.Username)
                 @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
                 <div>
@@ -39,10 +44,7 @@
                 <br />
                 <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
                 <br />
-                <div id="dvMessage" style="display:none" class="alert alert-danger">
-                    <strong>Error!</strong>
-                    <span>@ViewBag.Message</span>
-                </div>
+                
             </div>
         </div>
     }

@@ -2,6 +2,7 @@
 using JoyGClient.DTOs;
 using JoyGClient.Entities;
 using JoyGClient.Interfaces;
+using JoyGClient.Models;
 
 namespace JoyGClient.Services
 {
@@ -16,7 +17,7 @@ namespace JoyGClient.Services
             _restaurantClassificationRepository = restaurantClassificationRepository;
         }
 
-        public async Task<ResponseDto> AddClassification(RestaurantClassificationDto classificationDto)
+        public async Task<ResponseDto> AddClassification(ClassificationModel classificationDto)
         {
             var responseDto = new ResponseDto();
             if (_restaurantClassificationRepository.ClassificationExists(classificationDto.ClassificationName))
@@ -44,7 +45,7 @@ namespace JoyGClient.Services
 
         }
 
-        public async Task<ResponseDto> EditClassification(RestaurantClassificationDto classificationDto)
+        public async Task<ResponseDto> EditClassification(ClassificationModel classificationDto)
         {
             var responseDto = new ResponseDto();
 

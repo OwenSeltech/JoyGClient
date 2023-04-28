@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+	<!-- [ basic-alert ] start -->
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<h5 class="h-100 d-flex align-items-center justify-content-center">Back Office</h5>
+			</div>
+			<div class="card-body">
+				<div class="alert alert-success" >
+					<a class="nav-link text-dark" asp-area="" asp-controller="BackEnd" asp-action="ManageRestaurantClassifications">Manage Restaurant Classifications</a>
+				</div>
+				<div class="alert alert-success" >
+					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Manage Dish Types</a>
+				</div>
+				<div class="alert alert-success" >
+					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Manage Restaurants</a>
+				</div>
+				<div class="alert alert-success" >
+					<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">View Reports</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

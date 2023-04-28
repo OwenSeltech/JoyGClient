@@ -43,9 +43,9 @@ namespace JoyGClient.Controllers
                         userDto.Token,
                            new CookieOptions { HttpOnly = true, Expires = DateTimeOffset.UtcNow.AddDays(7) });
 
-                        //return RedirectToAction("Index", "Home");
+                        if (userDto.Roles.ElementAt(0) == "DataAdmin") return RedirectToAction("Index", "Dashboard");
                     }
-                    ViewBag.Message = message;
+                   
                 }
             }
             else
@@ -70,7 +70,7 @@ namespace JoyGClient.Controllers
                 if (Request.Method == "POST")
                 {
                     registerModel.CreatedBy = "Web";
-                    registerModel.UserRole = "EndUser";
+                    registerModel.UserRole = "DataAdmin";
                     var userDto = await _authService.Register(registerModel);
                     if (userDto.Message != "Success")
                     {
