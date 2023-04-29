@@ -15,6 +15,8 @@ namespace JoyGClient.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IClassificationService, ClassificationService>();
             services.AddScoped<IRestaurantClassificationRepository, RestaurantClassificationRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
+
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             var connectionString = config.GetConnectionString("DefaultConnection");
@@ -24,11 +26,6 @@ namespace JoyGClient.Extensions
                     sqlOptions.EnableRetryOnFailure();
 
                 }), ServiceLifetime.Transient);
-            services.AddAuthentication("Identity.Application")
-                                       .AddCookie("Identity.Application", options =>
-                                       {
-                                           // Configure cookie options here
-                                       });
             return services;
         }
 

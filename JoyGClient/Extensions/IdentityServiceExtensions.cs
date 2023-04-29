@@ -1,9 +1,7 @@
 ﻿using JoyGClient.Data;
 using JoyGClient.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace JoyGClient.Extensions
 {
@@ -20,19 +18,31 @@ namespace JoyGClient.Extensions
                 .AddSignInManager<SignInManager<AppUser>>()
                 .AddRoleValidator<RoleValidator<Roles>>()
                 .AddEntityFrameworkStores<DataContext>()
-                .AddDefaultTokenProviders();
-         
+               /* .AddDefaultTokenProviders()*/;
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                };
-            });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                                          .AddCookie("Cookies", options =>
+                                          {
+                                              //options.Cookie.Name = "MySessionCookie";
+                                              options.LoginPath = "/Auth/Index";
+                                              options.LogoutPath = "/Auth/Logout";
+                                              options.Cookie.HttpOnly = true;
+                                              options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                                              options.SlidingExpiration = true;
+                                              options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                                          });
+
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"])),
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //    };
+            //});
+
             return services;
         }
 

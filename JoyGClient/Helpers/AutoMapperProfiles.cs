@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using JoyGClient.DTOs;
 using JoyGClient.Entities;
+using JoyGClient.Models;
 
 namespace JoyGClient.Helpers
 {
@@ -8,7 +8,7 @@ namespace JoyGClient.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<RestaurantClassificationDto, RestaurantClassifications>();
+            CreateMap<ClassificationModel, RestaurantClassifications>();
         }
     }
 }

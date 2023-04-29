@@ -1,8 +1,4 @@
 ﻿@model JoyGClient.Models.ClassificationModel
-@*@{
-    ViewData["Title"] = "ManageRestaurantClassifications";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}*@
 
 <form asp-controller="BackEnd" asp-action="AddClassification" data-ajax="true" data-ajax-method="POST">
     <div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
@@ -42,22 +38,6 @@
 
 @if (@ViewBag.Message != null)
 {
-    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: '/BackEnd/ManageRestaurantClassifications',
-                type: 'GET',
-                success: function (result) {
-                    @*  console.log("Success")
-                    $('#modalContainer').html(result);
-                    $('#modalAdd').modal('show');*@
-                        $('#myDataContainer').html(data.MyData);
-                }
-            });
-        );
-        });
-    </script>
     <script type="text/javascript">
         $(function () {
             $("#dvMessage").show();
@@ -65,7 +45,3 @@
     </script>
 }
 
-@section scripts{
-
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.unobtrusive-ajax/3.2.5/jquery.unobtrusive-ajax.min.js"></script>
-}

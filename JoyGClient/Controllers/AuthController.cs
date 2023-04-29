@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using JoyGClient.Entities;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace JoyGClient.Controllers
 {
@@ -11,15 +13,19 @@ namespace JoyGClient.Controllers
     {
         private readonly IAuthService _authService;
         private readonly SignInManager<AppUser> _signInManager;
-        public AuthController(IAuthService authService, SignInManager<AppUser> signInManager)
+        private readonly UserManager<AppUser> _userManager;
+
+        public AuthController(IAuthService authService, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
             _authService = authService;
             _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpGet]
         public ActionResult Index()
         {
+
             return View();
         }
         [HttpPost]
@@ -38,14 +44,20 @@ namespace JoyGClient.Controllers
                     }
                     else
                     {
-                        Response.Cookies.Append(
-                           CookieAuthenticationDefaults.AuthenticationScheme,
-                        userDto.Token,
-                           new CookieOptions { HttpOnly = true, Expires = DateTimeOffset.UtcNow.AddDays(7) });
+                        var claimsIdentity = new ClaimsIdentity(
+                            userDto.claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authProperties = new AuthenticationProperties
+                        {
+                            ExpiresUtc = DateTime.Now.AddMinutes(10),
+                        };
+                        await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
 
                         if (userDto.Roles.ElementAt(0) == "DataAdmin") return RedirectToAction("Index", "Dashboard");
                     }
-                   
+
                 }
             }
             else
@@ -78,10 +90,18 @@ namespace JoyGClient.Controllers
                     }
                     else
                     {
-                        Response.Cookies.Append(
-                          CookieAuthenticationDefaults.AuthenticationScheme,
-                       userDto.Token,
-                          new CookieOptions { HttpOnly = true, Expires = DateTimeOffset.UtcNow.AddDays(7) });
+                        var claimsIdentity = new ClaimsIdentity(
+                            userDto.claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authProperties = new AuthenticationProperties
+                        {
+                            ExpiresUtc = DateTime.Now.AddMinutes(10),
+                        };
+                        await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
+
+                        if (userDto.Roles.ElementAt(0) == "DataAdmin") return RedirectToAction("Index", "Dashboard");
                     }
                     //ViewBag.Message = message;
                 }

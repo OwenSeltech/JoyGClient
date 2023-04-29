@@ -1,9 +1,9 @@
 ﻿namespace JoyGClient.Entities
 {
-    public class RestaurantClassifications
+    public class DishTypes
     {
         public int Id { get; set; }
-        public string ClassificationName { get; set; }
+        public string DishTypeName { get; set; }
         public AppUser CreatedBy { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public AppUser UpdatedBy { get; set; }

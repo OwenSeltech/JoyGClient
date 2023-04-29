@@ -9,12 +9,14 @@ namespace JoyGClient.Services
     public class ClassificationService : IClassificationService
     {
         private readonly IRestaurantClassificationRepository _restaurantClassificationRepository;
+        private readonly IUsersRepository _usersRepository;
         private readonly IMapper _mapper;
 
-        public ClassificationService(IRestaurantClassificationRepository restaurantClassificationRepository, IMapper mapper)
+        public ClassificationService(IRestaurantClassificationRepository restaurantClassificationRepository, IMapper mapper,IUsersRepository usersRepository)
         {
             _mapper = mapper;
             _restaurantClassificationRepository = restaurantClassificationRepository;
+            _usersRepository = usersRepository;
         }
 
         public async Task<ResponseDto> AddClassification(ClassificationModel classificationDto)
@@ -27,9 +29,20 @@ namespace JoyGClient.Services
                 responseDto.Message = "Classification Name Exists";
                 return responseDto;
             }
-               
+
+            var user = await _usersRepository.GetUserByUsernameAsync(classificationDto.CreatedBy);
+            if (user == null) 
+            {
+                responseDto = new ResponseDto();
+                responseDto.IsSuccess = false;
+                responseDto.Message = "Please Login To add";
+                return responseDto;
+            }
+
             var restaurantClassification = new RestaurantClassifications();
-            _mapper.Map(classificationDto, restaurantClassification);
+            restaurantClassification.CreatedBy = user;
+            restaurantClassification.UpdatedBy = user;
+            restaurantClassification.ClassificationName = classificationDto.ClassificationName;
             if (await _restaurantClassificationRepository.AddClassificationAsync(restaurantClassification))
             {
                 responseDto = new ResponseDto();
@@ -65,8 +78,19 @@ namespace JoyGClient.Services
                 responseDto.Message = "Classification Name Exist";
                 return responseDto;
             }
-         
-            _mapper.Map(classificationDto, classification);
+
+            var user = await _usersRepository.GetUserByUsernameAsync(classificationDto.CreatedBy);
+            if (user == null)
+            {
+                responseDto = new ResponseDto();
+                responseDto.IsSuccess = false;
+                responseDto.Message = "Please Login To add";
+                return responseDto;
+            }
+
+            classification.CreatedBy = user;
+            classification.UpdatedBy = user;
+            classification.ClassificationName = classificationDto.ClassificationName;
             classification.DateUpdated = DateTime.Now;
             if (await _restaurantClassificationRepository.UpdateClassificationAsync(classification))
             {

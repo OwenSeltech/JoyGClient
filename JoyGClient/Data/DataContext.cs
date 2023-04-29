@@ -28,6 +28,8 @@ namespace JoyGClient.Data
 
         }
         public DbSet<RestaurantClassifications> RestaurantClassifications { get; set; }
+        public DbSet<DishTypes>  DishTypes { get; set; }
+
 
 
     }

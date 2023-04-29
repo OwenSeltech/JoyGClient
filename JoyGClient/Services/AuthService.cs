@@ -40,15 +40,11 @@ namespace JoyGClient.Services
                 return userDto;
             }
 
-            var signIn = await _signInManager.PasswordSignInAsync(user.UserName, loginDto.Password, false, lockoutOnFailure: true);
-
-
             var claims = new List<Claim>
-           {
-               new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),
-               new Claim(JwtRegisteredClaimNames.UniqueName,user.UserName),
-           };
-
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+            };
             var roles = await _userManager.GetRolesAsync(user);
             userDto.Roles = (IList<string>)roles;
             userDto.Message = "Success";
