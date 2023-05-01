@@ -4,6 +4,7 @@ using JoyGClient.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JoyGClient.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230501105504_Restaurants")]
+    partial class Restaurants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -151,7 +153,7 @@ namespace JoyGClient.Data.Migrations
                     b.Property<int>("DishTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RestaurantId")
+                    b.Property<int?>("RestaurantId")
                         .HasColumnType("int");
 
                     b.Property<int>("UpdatedById")
@@ -421,11 +423,9 @@ namespace JoyGClient.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JoyGClient.Entities.Restaurant", "Restaurant")
+                    b.HasOne("JoyGClient.Entities.Restaurant", null)
                         .WithMany("Dishes")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RestaurantId");
 
                     b.HasOne("JoyGClient.Entities.AppUser", "UpdatedBy")
                         .WithMany()
@@ -436,8 +436,6 @@ namespace JoyGClient.Data.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("DishType");
-
-                    b.Navigation("Restaurant");
 
                     b.Navigation("UpdatedBy");
                 });

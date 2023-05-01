@@ -14,8 +14,14 @@ namespace JoyGClient.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IClassificationService, ClassificationService>();
+			services.AddScoped<IDishTypeService, DishTypeService>();
+            services.AddScoped<IRestaurantService, RestaurantService>();
+            services.AddScoped<IDishesService, DishesService>();
             services.AddScoped<IRestaurantClassificationRepository, RestaurantClassificationRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
+			services.AddScoped<IDishTypeRepository, DishTypeRepository>();
+            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            services.AddScoped<IDishesRepository, DishesRepository>();
 
 
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);

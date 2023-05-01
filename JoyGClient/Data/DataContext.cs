@@ -29,8 +29,11 @@ namespace JoyGClient.Data
         }
         public DbSet<RestaurantClassifications> RestaurantClassifications { get; set; }
         public DbSet<DishTypes>  DishTypes { get; set; }
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Dishes> Dishes  { get; set; }
+        public DbSet<Preferences> Preferences { get; set; }
 
-
+        add preferences table
 
     }
 }

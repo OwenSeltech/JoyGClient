@@ -1,22 +1,45 @@
-﻿@model IEnumerable<JoyGClient.Entities.RestaurantClassifications>
+﻿@model IEnumerable<JoyGClient.Entities.Restaurant>
 @{
-    ViewData["Title"] = "ManageRestaurantClassifications";
+    ViewData["Title"] = "ManageRestaurants";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Manage Restaurant Classifications</h1>
+<h1>Manage Restaurant Restaurants</h1>
 
 <div class="row">
     <table id="employeeDatatable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Added Date</th>
+                <th>Restaurant</th>
+                <th>Classification</th>
+                <th># of dishes</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>@item.DateCreated.ToString("yyyy-MM-dd")</td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ClassificationName)
+                        @Html.DisplayFor(modelItem => item.RestaurantName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RestaurantClassification.ClassificationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dishes.Count)
                     </td>
                     <td>
                         <button class="btn btn-success selbtn" data-id="@item.Id">Edit</button>
+                    </td>
+                    <td>
+                        <form method="get" action="@Url.Action("RestaurantDetails", "BackEnd")">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <button class="btn btn-success" type="submit">Details</button>
+                        </form>
                     </td>
                 </tr>
             }
@@ -38,12 +61,12 @@
 </div>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#showAddModal').click(function () {
             $.ajax({
-                    url: '/BackEnd/AddClassification',
+                url: '/BackEnd/_AddRestaurant',
                 type: 'GET',
-                success: function(result) {
+                success: function (result) {
                     $('#modalContainer').html(result);
                     $('#modalAdd').modal('show');
                     $("#MsgOut").text("");
@@ -57,7 +80,7 @@
         $('.selbtn').click(function () {
             var id = $(this).data('id');
             $.ajax({
-                url: '/BackEnd/_EditClassification',
+                url: '/BackEnd/_EditRestaurant',
                 type: 'GET',
                 data: { id: id },
                 success: function (result) {
@@ -74,10 +97,9 @@
 <script>
     $(function () {
         var strValue = "@((string)ViewBag.mssg)";
-        if (strValue !== null && strValue !== "")
-        {
+        if (strValue !== null && strValue !== "") {
             $.ajax({
-                url: '/BackEnd/AddClassification',
+                url: '/BackEnd/_AddRestaurant',
                 type: 'GET',
                 success: function (result) {
                     $('#modalContainer').html(result);
@@ -87,12 +109,11 @@
                 }
             });
         }
-        else
-        {
+        else {
             var strValue = "@((string)ViewBag.mssgEdit)";
             if (strValue !== null && strValue !== "") {
                 $.ajax({
-                    url: '/BackEnd/_EditClassification',
+                    url: '/BackEnd/_EditRestaurant',
                     type: 'GET',
                     success: function (result) {
                         $('#modalContainer').html(result);
@@ -103,6 +124,6 @@
                 });
             }
         }
-      
+
     });
 </script>

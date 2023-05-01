@@ -16,7 +16,7 @@
                         @Html.DisplayFor(modelItem => item.DishTypeName)
                     </td>
                     <td>
-                        <button id="selbtn" class="btn btn-success" data-id="@item.Id">Edit</button>
+                        <button class="btn btn-success selbtn" data-id="@item.Id">Edit</button>
                     </td>
                 </tr>
             }
@@ -41,7 +41,7 @@
     $(document).ready(function() {
         $('#showAddModal').click(function () {
             $.ajax({
-                    url: '/BackEnd/AddClassification',
+                url: '/BackEnd/_AddDishType',
                 type: 'GET',
                 success: function(result) {
                     $('#modalContainer').html(result);
@@ -54,10 +54,10 @@
     });
 
     $(document).ready(function () {
-        $('#selbtn').click(function () {
+        $('.selbtn').click(function () {
             var id = $(this).data('id');
             $.ajax({
-                url: '/BackEnd/_EditClassification',
+                url: '/BackEnd/_EditDishType',
                 type: 'GET',
                 data: { id: id },
                 success: function (result) {
@@ -77,7 +77,7 @@
         if (strValue !== null && strValue !== "")
         {
             $.ajax({
-                url: '/BackEnd/AddClassification',
+                url: '/BackEnd/_AddDishType',
                 type: 'GET',
                 success: function (result) {
                     $('#modalContainer').html(result);
@@ -92,7 +92,7 @@
             var strValue = "@((string)ViewBag.mssgEdit)";
             if (strValue !== null && strValue !== "") {
                 $.ajax({
-                    url: '/BackEnd/_EditClassification',
+                    url: '/BackEnd/_EditDishType',
                     type: 'GET',
                     success: function (result) {
                         $('#modalContainer').html(result);

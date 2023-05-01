@@ -4,6 +4,7 @@ using JoyGClient.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JoyGClient.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230501103052_DishTypes")]
+    partial class DishTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,53 +125,6 @@ namespace JoyGClient.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("JoyGClient.Entities.Dishes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DishDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("DishName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DishTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UpdatedById")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DishTypeId");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("Dishes");
-                });
-
             modelBuilder.Entity("JoyGClient.Entities.DishTypes", b =>
                 {
                     b.Property<int>("Id")
@@ -201,44 +156,6 @@ namespace JoyGClient.Data.Migrations
                     b.HasIndex("UpdatedById");
 
                     b.ToTable("DishTypes");
-                });
-
-            modelBuilder.Entity("JoyGClient.Entities.Restaurant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CreatedById")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RestaurantClassificationId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RestaurantName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UpdatedById")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("RestaurantClassificationId");
-
-                    b.HasIndex("UpdatedById");
-
-                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("JoyGClient.Entities.RestaurantClassifications", b =>
@@ -407,41 +324,6 @@ namespace JoyGClient.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("JoyGClient.Entities.Dishes", b =>
-                {
-                    b.HasOne("JoyGClient.Entities.AppUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.DishTypes", "DishType")
-                        .WithMany()
-                        .HasForeignKey("DishTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.Restaurant", "Restaurant")
-                        .WithMany("Dishes")
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.AppUser", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("DishType");
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("UpdatedBy");
-                });
-
             modelBuilder.Entity("JoyGClient.Entities.DishTypes", b =>
                 {
                     b.HasOne("JoyGClient.Entities.AppUser", "CreatedBy")
@@ -457,33 +339,6 @@ namespace JoyGClient.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("CreatedBy");
-
-                    b.Navigation("UpdatedBy");
-                });
-
-            modelBuilder.Entity("JoyGClient.Entities.Restaurant", b =>
-                {
-                    b.HasOne("JoyGClient.Entities.AppUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.RestaurantClassifications", "RestaurantClassification")
-                        .WithMany()
-                        .HasForeignKey("RestaurantClassificationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.AppUser", "UpdatedBy")
-                        .WithMany()
-                        .HasForeignKey("UpdatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedBy");
-
-                    b.Navigation("RestaurantClassification");
 
                     b.Navigation("UpdatedBy");
                 });
@@ -565,11 +420,6 @@ namespace JoyGClient.Data.Migrations
             modelBuilder.Entity("JoyGClient.Entities.AppUser", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("JoyGClient.Entities.Restaurant", b =>
-                {
-                    b.Navigation("Dishes");
                 });
 
             modelBuilder.Entity("JoyGClient.Entities.Roles", b =>

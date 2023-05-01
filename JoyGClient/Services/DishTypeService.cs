@@ -57,7 +57,7 @@ namespace JoyGClient.Services
             return responseDto;
 
         }
-        public async Task<ResponseDto> EditClassification(DishTypeModel dishTypeModel)
+        public async Task<ResponseDto> EditDishType(DishTypeModel dishTypeModel)
         {
             var responseDto = new ResponseDto();
 

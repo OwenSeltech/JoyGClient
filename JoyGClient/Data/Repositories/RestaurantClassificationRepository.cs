@@ -32,7 +32,8 @@ namespace JoyGClient.Data.Repositories
         {
             return await _context.RestaurantClassifications
                 .Where(x => x.Id.ToString() == id.Trim())
-                .AsNoTracking()
+                .Include(x => x.UpdatedBy)
+                .Include(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
         }
         public async Task<RestaurantClassifications> GetClassificationByNameAsync(string name)

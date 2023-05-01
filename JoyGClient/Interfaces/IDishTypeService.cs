@@ -7,7 +7,7 @@ namespace JoyGClient.Interfaces
     public interface IDishTypeService
     {
         Task<ResponseDto> AddDishType(DishTypeModel dishTypeModel);
-        Task<ResponseDto> EditClassification(DishTypeModel dishTypeModel);
+        Task<ResponseDto> EditDishType(DishTypeModel dishTypeModel);
         Task<IEnumerable<DishTypes>> GetDishTypes();
         Task<DishTypes> GetDishTypeById(string typeId);
     }
