@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace JoyGClient.Models
 {
@@ -35,6 +36,8 @@ namespace JoyGClient.Models
         public bool IsEmployed { get; set; } = false;
         public string? UserRole { get; set; }
         public string? CreatedBy { get; set; }
+        public IEnumerable<SelectListItem>? Classifications { get; set; }
+        public string? SelectedOptions { get; set; }
     }
 
 }

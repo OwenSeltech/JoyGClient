@@ -4,6 +4,7 @@ using JoyGClient.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JoyGClient.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230502095820_Preferences")]
+    partial class Preferences
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,46 +172,6 @@ namespace JoyGClient.Data.Migrations
                     b.ToTable("Dishes");
                 });
 
-            modelBuilder.Entity("JoyGClient.Entities.DishesEnjoyed", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DishesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FlavourRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PresentationRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SurveyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("WineRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DishesId");
-
-                    b.HasIndex("SurveyId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("DishesEnjoyed");
-                });
-
             modelBuilder.Entity("JoyGClient.Entities.DishTypes", b =>
                 {
                     b.Property<int>("Id")
@@ -251,7 +213,7 @@ namespace JoyGClient.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AppUserId")
+                    b.Property<int?>("AppUserId")
                         .HasColumnType("int");
 
                     b.Property<int>("ClassificationsId")
@@ -365,48 +327,6 @@ namespace JoyGClient.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("JoyGClient.Entities.Survey", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AmbienceRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Comments")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateVisited")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("OverallRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RestaurantId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ServiceRating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RestaurantId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Surveys");
                 });
 
             modelBuilder.Entity("JoyGClient.Entities.UserRoles", b =>
@@ -547,29 +467,6 @@ namespace JoyGClient.Data.Migrations
                     b.Navigation("UpdatedBy");
                 });
 
-            modelBuilder.Entity("JoyGClient.Entities.DishesEnjoyed", b =>
-                {
-                    b.HasOne("JoyGClient.Entities.Dishes", "Dishes")
-                        .WithMany()
-                        .HasForeignKey("DishesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.Survey", null)
-                        .WithMany("DishesEnjoyed")
-                        .HasForeignKey("SurveyId");
-
-                    b.HasOne("JoyGClient.Entities.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Dishes");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("JoyGClient.Entities.DishTypes", b =>
                 {
                     b.HasOne("JoyGClient.Entities.AppUser", "CreatedBy")
@@ -591,19 +488,15 @@ namespace JoyGClient.Data.Migrations
 
             modelBuilder.Entity("JoyGClient.Entities.Preferences", b =>
                 {
-                    b.HasOne("JoyGClient.Entities.AppUser", "AppUser")
+                    b.HasOne("JoyGClient.Entities.AppUser", null)
                         .WithMany("Preferences")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AppUserId");
 
                     b.HasOne("JoyGClient.Entities.RestaurantClassifications", "Classifications")
                         .WithMany()
                         .HasForeignKey("ClassificationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("Classifications");
                 });
@@ -652,25 +545,6 @@ namespace JoyGClient.Data.Migrations
                     b.Navigation("CreatedBy");
 
                     b.Navigation("UpdatedBy");
-                });
-
-            modelBuilder.Entity("JoyGClient.Entities.Survey", b =>
-                {
-                    b.HasOne("JoyGClient.Entities.Restaurant", "Restaurant")
-                        .WithMany()
-                        .HasForeignKey("RestaurantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JoyGClient.Entities.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Restaurant");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("JoyGClient.Entities.UserRoles", b =>
@@ -743,11 +617,6 @@ namespace JoyGClient.Data.Migrations
             modelBuilder.Entity("JoyGClient.Entities.Roles", b =>
                 {
                     b.Navigation("UserRoles");
-                });
-
-            modelBuilder.Entity("JoyGClient.Entities.Survey", b =>
-                {
-                    b.Navigation("DishesEnjoyed");
                 });
 #pragma warning restore 612, 618
         }

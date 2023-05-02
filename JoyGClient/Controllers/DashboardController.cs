@@ -12,5 +12,11 @@ namespace JoyGClient.Controllers
             return View();
         }
 
-	}
+        [Authorize]
+        public IActionResult UserDashboard()
+        {
+            return View();
+        }
+
+    }
 }

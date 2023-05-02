@@ -118,5 +118,11 @@ namespace JoyGClient.Services
             return classifications;
         }
 
+        public async Task<RestaurantClassifications> GetClassificationByName(string className)
+        {
+            var classifications = await _restaurantClassificationRepository.GetClassificationByNameAsync(className);
+            return classifications;
+        }
+
     }
 }

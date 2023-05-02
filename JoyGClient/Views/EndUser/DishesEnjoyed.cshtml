@@ -1,0 +1,134 @@
+﻿
+@model IEnumerable<JoyGClient.Entities.DishesEnjoyed>
+@{
+    ViewData["Title"] = "DishesEnjoyed";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>What Dish(es) did you and family/friends enjoy?</h3>
+@*
+<div class="row">
+    <table iclass="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Name of Dish</th>
+                <th>Classification</th>
+                <th>Flavour</th>
+                <th>Presentation</th>
+                <th>Wine</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dishes.DishName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dishes.DishType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FlavourRating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PresentationRating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WineRating)
+                    </td>
+                    <td>
+                        <button class="btn btn-success selbtn" data-id="@item.Id">Edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger delbtn" data-id="@item.Id">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+*@
+<div class="row">
+    <div class="col-md-3">
+        <button class="btn btn-primary btn-sm mb-3 btn-round" id="showAddModal"><i class="feather icon-plus"></i>Add a dish </button>
+    </div>
+</div>
+<div id="modalContainer"></div>
+<div id="myDataContainer"></div>
+
+<div>
+    <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="UserDashboard">Back To Home</a>
+
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#showAddModal').click(function () {
+            $.ajax({
+                url: '/BackEnd/AddClassification',
+                type: 'GET',
+                success: function (result) {
+                    $('#modalContainer').html(result);
+                    $('#modalAdd').modal('show');
+                    $("#MsgOut").text("");
+                    $("#dvMessage").hide();
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('.selbtn').click(function () {
+            var id = $(this).data('id');
+            $.ajax({
+                url: '/BackEnd/_EditClassification',
+                type: 'GET',
+                data: { id: id },
+                success: function (result) {
+                    $('#modalContainer').html(result);
+                    $('#modalAdd').modal('show');
+                    $("#MsgOut").text("");
+                    $("#dvMessage").hide();
+                    $('#myHiddenField').val(id);
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(function () {
+        var strValue = "@((string)ViewBag.mssg)";
+        if (strValue !== null && strValue !== "") {
+            $.ajax({
+                url: '/BackEnd/AddClassification',
+                type: 'GET',
+                success: function (result) {
+                    $('#modalContainer').html(result);
+                    $('#modalAdd').modal('show');
+                    $("#MsgOut").text(strValue);
+                    $("#dvMessage").show();
+                }
+            });
+        }
+        else {
+            var strValue = "@((string)ViewBag.mssgEdit)";
+            if (strValue !== null && strValue !== "") {
+                $.ajax({
+                    url: '/BackEnd/_EditClassification',
+                    type: 'GET',
+                    success: function (result) {
+                        $('#modalContainer').html(result);
+                        $('#modalAdd').modal('show');
+                        $("#MsgOut").text(strValue);
+                        $("#dvMessage").show();
+                    }
+                });
+            }
+        }
+
+    });
+</script>
+

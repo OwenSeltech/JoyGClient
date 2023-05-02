@@ -17,14 +17,19 @@ namespace JoyGClient.Extensions
 			services.AddScoped<IDishTypeService, DishTypeService>();
             services.AddScoped<IRestaurantService, RestaurantService>();
             services.AddScoped<IDishesService, DishesService>();
-            services.AddScoped<IRestaurantClassificationRepository, RestaurantClassificationRepository>();
+            services.AddScoped<IPreferenceService, PreferenceService>();
+			services.AddScoped<ISurveyService, SurveyService>();
+			services.AddScoped<IRestaurantClassificationRepository, RestaurantClassificationRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
 			services.AddScoped<IDishTypeRepository, DishTypeRepository>();
             services.AddScoped<IRestaurantRepository, RestaurantRepository>();
             services.AddScoped<IDishesRepository, DishesRepository>();
+            services.AddScoped<IPreferenceRepository, PreferenceRepository>();
+			services.AddScoped<ISurveyRepository, SurveyRepository>();
+			services.AddScoped<IDishesEnjoyedRepository, DishesEnjoyedRepository>();
 
 
-            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+			services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
             var connectionString = config.GetConnectionString("DefaultConnection");
             services.AddDbContextFactory<DataContext>(options => options.UseSqlServer(
                 connectionString, sqlServerOptionsAction: sqlOptions =>

@@ -14,11 +14,17 @@ namespace JoyGClient.Services
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenService _tokenService;
-        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService)
+        private readonly IPreferenceService _preferenceService;
+        private readonly IClassificationService _classificationService;
+
+
+        public AuthService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IPreferenceService preferenceService, IClassificationService classificationService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _tokenService = tokenService;
+            _preferenceService = preferenceService;
+            _classificationService = classificationService;
         }
         public async Task<UserDto> Login(LoginModel loginDto)
         {
@@ -81,7 +87,7 @@ namespace JoyGClient.Services
                 Address = registerDto.Address,
                 Province = registerDto.Province.ToString(),
                 IsEmployed = registerDto.IsEmployed,
-                CreatedBy = registerDto.CreatedBy
+                CreatedBy = registerDto.CreatedBy,
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -98,6 +104,21 @@ namespace JoyGClient.Services
                 userDto.Message = result.Errors.ToString();
                 return userDto;
             }
+
+            if (!string.IsNullOrEmpty(registerDto.SelectedOptions))
+            {
+                var optionsArray = registerDto.SelectedOptions.Split(',');
+                for (int i = 0; i < optionsArray.Length; i++)
+                {
+                    var classification = await _classificationService.GetClassificationByName(optionsArray.ElementAt(i).Trim());
+                    var preference = new Preferences();
+                    preference.AppUser = user;
+                    preference.Classifications = classification;
+
+                    var insertResult = await _preferenceService.AddPreference(preference);
+                }
+            }
+
             var claims = new List<Claim>
            {
                new Claim(JwtRegisteredClaimNames.NameId,user.Id.ToString()),

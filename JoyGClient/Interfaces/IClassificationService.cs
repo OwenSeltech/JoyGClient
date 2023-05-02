@@ -10,6 +10,7 @@ namespace JoyGClient.Interfaces
         Task<ResponseDto> EditClassification(ClassificationModel classificationDto);
         Task<IEnumerable<RestaurantClassifications>> GetClassifications();
         Task<RestaurantClassifications> GetClassificationById(string classId);
+        Task<RestaurantClassifications> GetClassificationByName(string className);
 
     }
 }

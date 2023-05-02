@@ -15,5 +15,6 @@ namespace JoyGClient.Entities
         public ICollection<UserRoles> UserRoles { get; set; }
         public string? CreatedBy { get; set; } 
         public DateTime DateCreated { get; set; } = DateTime.Now;
+        public List<Preferences>? Preferences { get; set; }    
     }
 }

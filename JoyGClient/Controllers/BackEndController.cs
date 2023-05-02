@@ -15,14 +15,17 @@ namespace JoyGClient.Controllers
         private readonly IDishTypeService _dishTypeService;
         private readonly IRestaurantService _restaurantService;
         private readonly IDishesService _dishesService;
+        private readonly IUsersRepository _usersRepository;
 
 
-        public BackEndController(IClassificationService classificationService,IDishTypeService dishTypeService, IRestaurantService restaurantService,IDishesService dishesService)
+
+        public BackEndController(IClassificationService classificationService,IDishTypeService dishTypeService, IRestaurantService restaurantService,IDishesService dishesService, IUsersRepository usersRepository)
         {
             _classificationService = classificationService;
             _dishTypeService = dishTypeService;
             _restaurantService = restaurantService;
             _dishesService = dishesService;
+            _usersRepository = usersRepository;
         }
 
         public IActionResult Index()
@@ -444,6 +447,12 @@ namespace JoyGClient.Controllers
                 TempData["mssgEdit"] = errorMessageString;
                 return RedirectToAction("RestaurantDetails", "BackEnd");
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ReportsAsync()
+        {
+            return View();
         }
 
 
